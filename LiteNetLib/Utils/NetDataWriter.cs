@@ -249,13 +249,13 @@ namespace LiteNetLib.Utils
             _position += data.Length;
         }
 
-        public void PutSBytesWithLength(sbyte[] data, int offset, ushort length)
+        public void PutSBytesWithLength(sbyte[] data, int offset, int length)
         {
             if (_autoResize)
-                ResizeIfNeed(_position + 2 + length);
+                ResizeIfNeed(_position + 4 + length);
             FastBitConverter.GetBytes(_data, _position, length);
-            Buffer.BlockCopy(data, offset, _data, _position + 2, length);
-            _position += 2 + length;
+            Buffer.BlockCopy(data, offset, _data, _position + 4, length);
+            _position += 4 + length;
         }
 
         public void PutSBytesWithLength(sbyte[] data)
@@ -263,13 +263,13 @@ namespace LiteNetLib.Utils
             PutArray(data, 1);
         }
 
-        public void PutBytesWithLength(byte[] data, int offset, ushort length)
+        public void PutBytesWithLength(byte[] data, int offset, int length)
         {
             if (_autoResize)
-                ResizeIfNeed(_position + 2 + length);
+                ResizeIfNeed(_position + 4 + length);
             FastBitConverter.GetBytes(_data, _position, length);
-            Buffer.BlockCopy(data, offset, _data, _position + 2, length);
-            _position += 2 + length;
+            Buffer.BlockCopy(data, offset, _data, _position + 4, length);
+            _position += 4 + length;
         }
 
         public void PutBytesWithLength(byte[] data)
@@ -284,14 +284,14 @@ namespace LiteNetLib.Utils
 
         public void PutArray(Array arr, int sz)
         {
-            ushort length = arr == null ? (ushort) 0 : (ushort)arr.Length;
+            int length = arr == null ? 0 : arr.Length;
             sz *= length;
             if (_autoResize)
-                ResizeIfNeed(_position + sz + 2);
+                ResizeIfNeed(_position + sz + 4);
             FastBitConverter.GetBytes(_data, _position, length);
             if (arr != null)
-                Buffer.BlockCopy(arr, 0, _data, _position + 2, sz);
-            _position += sz + 2;
+                Buffer.BlockCopy(arr, 0, _data, _position + 4, sz);
+            _position += sz + 4;
         }
 
         public void PutArray(float[] value)

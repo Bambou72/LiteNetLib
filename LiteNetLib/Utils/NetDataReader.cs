@@ -221,8 +221,8 @@ namespace LiteNetLib.Utils
 
         public T[] GetArray<T>(ushort size)
         {
-            ushort length = BitConverter.ToUInt16(_data, _position);
-            _position += 2;
+            int length = BitConverter.ToInt32(_data, _position);
+            _position += 4;
             T[] result = new T[length];
             length *= size;
             Buffer.BlockCopy(_data, _position, result, 0, length);
@@ -232,8 +232,8 @@ namespace LiteNetLib.Utils
 
         public T[] GetArray<T>() where T : INetSerializable, new()
         {
-            ushort length = BitConverter.ToUInt16(_data, _position);
-            _position += 2;
+            int length = BitConverter.ToInt32(_data, _position);
+            _position += 4;
             T[] result = new T[length];
             for (int i = 0; i < length; i++)
             {
@@ -246,8 +246,8 @@ namespace LiteNetLib.Utils
         
         public T[] GetArray<T>(Func<T> constructor) where T : class, INetSerializable
         {
-            ushort length = BitConverter.ToUInt16(_data, _position);
-            _position += 2;
+            int length = BitConverter.ToInt32(_data, _position);
+            _position += 4;
             T[] result = new T[length];
             for (int i = 0; i < length; i++)
                 Get(out result[i], constructor);
